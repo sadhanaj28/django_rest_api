@@ -1,0 +1,433 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Blog",
+				"BlogPostSerializer"
+			],
+			[
+				"rert",
+				"return"
+			],
+			[
+				"de",
+				"default"
+			],
+			[
+				"n",
+				"new_slug"
+			],
+			[
+				"slug",
+				"slugify"
+			],
+			[
+				"pre",
+				"pre_save_post_receiver"
+			],
+			[
+				"url",
+				"urlpatterns"
+			],
+			[
+				"post",
+				"post_list"
+			],
+			[
+				"st",
+				"style\tTag"
+			],
+			[
+				"get",
+				"get_object_or_404"
+			],
+			[
+				"post_",
+				"post_detail"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/postings/api/permissions.py",
+			"settings":
+			{
+				"buffer_size": 593,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/postings/api/views.py",
+			"settings":
+			{
+				"buffer_size": 1514,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "from rest_framework.test import APITestCase\nfrom rest_framework import status\nfrom rest_framework.reverse import reverse as api_reverse\n\nfrom rest_framework_jwt.settings import api_settings\npayload_handler = api_settings.JWT_PAYLOAD_HANDLER\nencode_handler = api_settings.JWT_ENCODE_HANDLER\n\nfrom django.contrib.auth import get_user_model\n\nfrom postings.models import BlogPost\n\nUser = get_user_model()\n\n#automated\nclass BlogPostAPITestCase(APITestCase):\n\tdef setUp(self):\n\t\tuser_obj = User(username = 'test', email = 'test@test.com')\n\t\tuser_obj.set_password(\"some random password\")\n\t\tuser_obj.save()\n\t\tblog_post = BlogPost.objects.create(\n\t\t\tuser = user_obj,\n\t\t\ttitle = 'new title test',\n\t\t\t content = 'some random contents here'\n\t\t\t )\n\tdef test_single_user(self):\n\t\tuser_count = User.objects.count()\n\t\tself.assertEqual(user_count, 1)\n\n\tdef test_single_post(self):\n\t\tpost_count = BlogPost.objects.count()\n\t\tself.assertEqual(post_count, 1)\n\n\tdef test_get_list(self):\n\t\tdata = {}\n\t\turl = api_reverse(\"api-postings:post-create\")\n\t\tresponse = self.client.get(url, data, format = 'json')\n\t\tself.assertEqual(response.status_code, status.HTTP_200_OK)\n\t\t#print(response.data)\n\n\tdef test_post_list(self):\n\t\tdata = {\"title\":\"some title\", \"content\" : \"some contents\"}\n\t\turl = api_reverse(\"api-postings:post-create\")\n\t\tresponse = self.client.post(url, data, format = 'json')\n\t\tself.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)\n\t\n\n\tdef test_get_item(self):\n\t\tblog_post = BlogPost.objects.first()\n\t\tdata = {}\n\t\turl = blog_post.get_api_url()\n\t\tresponse = self.client.get(url, data, format = 'json')\n\t\tself.assertEqual(response.status_code, status.HTTP_200_OK)\n\t\tprint(response.data)\n\n\tdef test_update_item(self):\n\t\tblog_post = BlogPost.objects.first()\n\t\turl = blog_post.get_api_url()\n\t\tdata = {\"title\":\"some title\", \"content\" : \"some contents\"}\n\t\tresponse = self.client.post(url, data, format = 'json')\n\t\tself.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)\n\t\tresponse = self.client.put(url, data, format = 'json')\n\t\tself.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)\n\t\t#print(response.data)\n\n\tdef test_update_item(self):\n\t\tblog_post = BlogPost.objects.first()\n\t\turl = blog_post.get_api_url()\n\t\tdata = {\"title\":\"some title\", \"content\" : \"some contents\"}\n\t\tresponse = self.client.post(url, data, format = 'json')\n\t\tself.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)\n\t\tresponse = self.client.put(url, data, format = 'json')\n\t\tself.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)\n\t\t\n\n\n",
+			"file": "src/postings/api/tests.py",
+			"file_size": 2037,
+			"file_write_time": 131903210204057629,
+			"settings":
+			{
+				"buffer_size": 2553,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/postings/models.py",
+			"settings":
+			{
+				"buffer_size": 724,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/postings/api/serializers.py",
+			"settings":
+			{
+				"buffer_size": 823,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Workspace/django_project/restapi",
+		"/C/Workspace/django_project/restapi/src",
+		"/C/Workspace/django_project/restapi/src/postings",
+		"/C/Workspace/django_project/restapi/src/postings/api",
+		"/C/Workspace/django_project/restapi/src/restapi",
+		"/C/Workspace/django_project/restapi/src/restapi/__pycache__"
+	],
+	"file_history":
+	[
+		"/C/Workspace/django_project/restapi/src/postings/views.py",
+		"/C/Workspace/django_project/restapi/src/postings/api/views.py",
+		"/C/Workspace/django_project/restapi/src/restapi/settings.py",
+		"/C/Workspace/django_project/restapi/src/postings/api/serializers.py",
+		"/C/Workspace/django_project/restapi/src/postings/api/urls.py",
+		"/C/Workspace/django_project/restapi/src/postings/api/motes.md",
+		"/C/Workspace/django_project/restapi/src/postings/models.py",
+		"/C/Workspace/django_project/restapi/src/restapi/urls.py",
+		"/C/Workspace/django_project/restapi/src/postings/admin.py",
+		"/C/Workspace/django_project/restapi/src/postings/api/__init__.py",
+		"/C/Workspace/django_project/myblog19/src/templates/post_list.html",
+		"/C/Workspace/django_project/myblog19/src/templates/post_detail.html",
+		"/C/Workspace/django_project/myblog19/src/posts/templatetags/urlify.py",
+		"/C/Workspace/django_project/myblog19/src/posts/templatetags/__init__.py",
+		"/C/Workspace/django_project/myblog19/src/myblog19/urls.py",
+		"/C/Workspace/django_project/myblog19/src/templates/post_form.html",
+		"/C/Workspace/django_project/myblog19/src/posts/models.py",
+		"/C/Workspace/django_project/myblog19/src/posts/forms.py",
+		"/C/Workspace/django_project/myblog19/src/myblog19/settings.py",
+		"/C/Workspace/django_project/myblog19/src/static/css/base.css",
+		"/C/Workspace/django_project/myblog19/src/templates/index.html",
+		"/C/Workspace/django_project/myblog19/src/posts/admin.py",
+		"/C/Workspace/django_project/myblog19/src/db.sqlite3"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/postings/api/permissions.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								46,
+								63
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/postings/api/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1514,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								870,
+								870
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 44.8,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/postings/api/tests.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2553,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2550,
+								2550
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 628.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/postings/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 724,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								151,
+								94
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/postings/api/serializers.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 823,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								565,
+								565
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "restapi-basics.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 50.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
